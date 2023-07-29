@@ -1,0 +1,7 @@
+node_modules/
+build/
+package-lock.json
+node_modules/*
+.idea/*
+images/*
+!images/.gitkeep
