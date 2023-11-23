@@ -32,6 +32,9 @@ io.on("connection", (socket) => {
 	socket.on("answerCall", (data) => {
 		io.to(data.to).emit("callAccepted", data.signal)
 	});
+    	socket.on("requestStream", ({ to }) => {
+        io.to(to).emit("requestStream");
+    	});
 });
 
 server.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
