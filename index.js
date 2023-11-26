@@ -35,6 +35,17 @@ io.on("connection", (socket) => {
     	socket.on("requestStream", ({ to }) => {
         io.to(to).emit("requestStream");
     	});
+	    // Evento emitido cuando un usuario actualiza su stream
+    	socket.on("streamUpdated", ({ id }) => {
+        // Notifica al otro peer que debe prepararse para la renegociación
+        socket.broadcast.to(id).emit("prepareRenegotiation");
+    	});
+
+    	// Evento para manejar la renegociación
+    	socket.on("renegotiate", ({ to, signal }) => {
+        // Envía la señalización para la renegociación
+        io.to(to).emit("renegotiate", { signal });
+    	});
 });
 
 server.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
